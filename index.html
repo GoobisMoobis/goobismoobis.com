@@ -1,0 +1,401 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>GoobisMoobis — Links & Projects</title>
+
+  <!-- Google Font -->
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+
+  <!-- Bootstrap CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+
+  <!-- Bootstrap Icons -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" rel="stylesheet">
+
+  <style>
+    :root{
+      --bg:#070707;
+      --card:#0f0f0f;
+      --accent:#ffb84d; /* orange-ish yellow */
+      --accent-2:#ff9f1c;
+      --muted:#cfcfcf;
+    }
+    
+    .text-muted {
+      color: var(--muted) !important;
+    }
+
+    html,body{height:100%}
+    body{
+      margin:0;
+      font-family:"Poppins",system-ui,-apple-system,Segoe UI,Roboto,"Helvetica Neue",Arial;
+      background: linear-gradient(180deg, var(--bg) 0%, #0b0b0b 100%);
+      color:var(--muted);
+      -webkit-font-smoothing:antialiased;
+      -moz-osx-font-smoothing:grayscale;
+    }
+
+    /* Page layout */
+    .hero{
+      min-height:100vh;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      padding:3rem 1.5rem;
+    }
+    .card-surface{
+      background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
+      border:1px solid rgba(255,255,255,0.03);
+      backdrop-filter: blur(6px);
+      border-radius:16px;
+      padding:1.25rem;
+    }
+
+    /* Logo / name */
+    .brand{
+      font-weight:700;
+      font-size:2.25rem;
+      letter-spacing:0.6px;
+      color:white;
+    }
+    .brand .accent{
+      color:var(--accent);
+      text-shadow:0 6px 20px rgba(255,168,60,0.06);
+    }
+    .tagline{
+      color:var(--muted);
+      margin-top:0.4rem;
+    }
+
+    /* Links grid */
+    .links-grid{
+      display:grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap:1rem;
+      margin-top:1rem;
+    }
+    .link-card{
+      background:transparent;
+      border:1px solid rgba(255,255,255,0.03);
+      padding:1rem;
+      border-radius:12px;
+      transition: transform .28s cubic-bezier(.2,.9,.3,1), box-shadow .28s;
+      transform: translateY(12px);
+      opacity:0;
+    }
+    .link-card.show-in{
+      transform:none;
+      opacity:1;
+    }
+    .link-card:hover{
+      transform: translateY(-6px) scale(1.01);
+      box-shadow: 0 10px 30px rgba(0,0,0,0.6), 0 2px 8px rgba(255,160,60,0.06);
+      border-color: rgba(255,168,60,0.12);
+    }
+    .link-card .bi{
+      font-size:1.45rem;
+    }
+    .accent-pill{
+      display:inline-block;
+      padding:.15rem .6rem;
+      border-radius:999px;
+      background:linear-gradient(90deg,var(--accent),var(--accent-2));
+      color:#0b0b0b;
+      font-weight:600;
+      font-size:.78rem;
+      box-shadow: 0 6px 18px rgba(255,160,60,0.06);
+    }
+
+    /* Projects list */
+    .projects {
+      margin-top:1.25rem;
+    }
+    .proj-card{
+      background:linear-gradient(180deg, rgba(255,255,255,0.01), rgba(255,255,255,0.005));
+      border-radius:12px;
+      padding:0.9rem;
+      border:1px solid rgba(255,255,255,0.03);
+      transition: transform .2s ease, box-shadow .2s;
+    }
+    .proj-card:hover{ transform: translateY(-6px); box-shadow: 0 14px 40px rgba(0,0,0,.6);}
+
+    /* Footer */
+    footer {
+      margin-top:1.5rem;
+      text-align:center;
+      color:rgba(255,255,255,0.45);
+      font-size:.9rem;
+    }
+
+    /* Typewriter cursor */
+    .typewriter { color:var(--accent); font-weight:700; }
+    .cursor {
+      display:inline-block;
+      width:.9ch;
+      animation: blink 1s step-start infinite;
+      margin-left:2px;
+    }
+    @keyframes blink { 50% { opacity:0 } }
+
+    /* Responsive spacing */
+    @media (min-width:992px){
+      .hero { padding:5rem; }
+      .brand{ font-size:2.8rem; }
+    }
+  </style>
+</head>
+<body>
+  <nav class="navbar navbar-dark py-3">
+    <div class="container">
+      <a class="navbar-brand d-flex align-items-center" href="#">
+        <span class="brand"><span class="accent">Goobis</span>Moobis</span>
+      </a>
+      <div>
+        <button class="btn btn-sm btn-outline-light me-2 d-none d-md-inline" data-bs-toggle="collapse" data-bs-target="#topLinks" aria-expanded="false">
+          Quick links
+        </button>
+        <button class="btn btn-sm btn-warning text-dark d-md-none" data-bs-toggle="offcanvas" data-bs-target="#mobileMenu" aria-controls="mobileMenu">
+          <i class="bi bi-list"></i>
+        </button>
+      </div>
+    </div>
+  </nav>
+
+  <div class="offcanvas offcanvas-end text-bg-dark" tabindex="-1" id="mobileMenu" aria-labelledby="mobileMenuLabel">
+    <div class="offcanvas-header">
+      <h5 class="offcanvas-title" id="mobileMenuLabel">GoobisMoobis</h5>
+      <button type="button" class="btn-close btn-close-white" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+    </div>
+    <div class="offcanvas-body">
+      <div class="list-group list-group-flush">
+        <a class="list-group-item list-group-item-action bg-transparent text-light" href="#links">Links</a>
+        <a class="list-group-item list-group-item-action bg-transparent text-light" href="#projects">Projects</a>
+        <a class="list-group-item list-group-item-action bg-transparent text-light" href="#contact">Contact</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- HERO / MAIN -->
+  <main class="hero">
+    <div class="container">
+      <div class="row g-4 align-items-start">
+        <div class="col-lg-5">
+          <div class="card-surface">
+            <div class="d-flex align-items-start justify-content-between">
+              <div>
+                <div class="brand">GoobisMoobis</div>
+                <div class="tagline">The one and only</div>
+                <div class="mt-3">
+                  <div class="h5 mb-1">Hello! I'm <span class="typewriter" id="typeTarget"></span><span class="cursor">▌</span></div>
+                  <p class="text-muted small">This is my low-effort website where I host most of my web-related projects</p>
+                </div>
+              </div>
+              <div class="text-end d-none d-lg-block">
+                <span class="accent-pill">Open to collab</span>
+              </div>
+            </div>
+
+            <!-- Quick links collapse -->
+            <div class="collapse mt-3" id="topLinks">
+              <div class="links-grid" id="links">
+                <a class="link-card text-decoration-none text-reset" href="https://github.com/" target="_blank" rel="noopener" data-bs-toggle="tooltip" title="My GitHub">
+                  <div class="d-flex align-items-start gap-3">
+                    <i class="bi bi-github"></i>
+                    <div>
+                      <div class="fw-bold">GitHub</div>
+                      <div class="small text-muted">Code, repos, and experiments</div>
+                    </div>
+                  </div>
+                </a>
+
+                <a class="link-card text-decoration-none text-reset" href="https://twitter.com/" target="_blank" rel="noopener" data-bs-toggle="tooltip" title="My Twitter/X">
+                  <div class="d-flex align-items-start gap-3">
+                    <i class="bi bi-twitter"></i>
+                    <div>
+                      <div class="fw-bold">Twitter</div>
+                      <div class="small text-muted">Short updates & demos</div>
+                    </div>
+                  </div>
+                </a>
+
+                <a class="link-card text-decoration-none text-reset" href="mailto:put-your-email@here.com" target="_blank" rel="noopener" data-bs-toggle="tooltip" title="Email me">
+                  <div class="d-flex align-items-start gap-3">
+                    <i class="bi bi-envelope"></i>
+                    <div>
+                      <div class="fw-bold">Email</div>
+                      <div class="small text-muted">Contact & collabs</div>
+                    </div>
+                  </div>
+                </a>
+
+                <a class="link-card text-decoration-none text-reset" href="#" target="_blank" rel="noopener" data-bs-toggle="tooltip" title="Other link">
+                  <div class="d-flex align-items-start gap-3">
+                    <i class="bi bi-link-45deg"></i>
+                    <div>
+                      <div class="fw-bold">More</div>
+                      <div class="small text-muted">Other links & pages</div>
+                    </div>
+                  </div>
+                </a>
+                <!-- add more -->
+              </div>
+            </div>
+
+            <div class="d-lg-none mt-3">
+              <div class="links-grid" id="links-mobile">
+                <a class="link-card text-decoration-none text-reset" href="https://github.com/GoobisMoobis" target="_blank" rel="noopener">
+                  <div class="d-flex gap-3">
+                    <i class="bi bi-github"></i><div><div class="fw-bold">GitHub</div><div class="small text-muted">Code</div></div>
+                  </div>
+                </a>
+                <a class="link-card text-decoration-none text-reset" href="mailto:contact@goobismoobis.com">
+                  <div class="d-flex gap-3">
+                    <i class="bi bi-envelope"></i><div><div class="fw-bold">Email</div><div class="small text-muted">Contact</div></div>
+                  </div>
+                </a>
+              </div>
+            </div>
+
+            <div class="mt-3 d-flex gap-2">
+              <a class="btn btn-outline-light btn-sm" href="#projects">See projects</a>
+              <button class="btn btn-warning btn-sm text-dark" id="copyBtn" data-clipboard="contact@goobismoobis.com">Copy Email</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Projects  -->
+        <div class="col-lg-7">
+          <div class="card-surface">
+            <div id="projects">
+              <div class="d-flex align-items-center justify-content-between">
+                <h5 class="m-0">Projects</h5>
+                <small class="text-muted">Selected highlights</small>
+              </div>
+
+              <div class="projects row row-cols-1 row-cols-md-2 g-3 mt-2">
+                <div class="col">
+                  <div class="proj-card">
+                    <div class="d-flex align-items-start justify-content-between">
+                      <div>
+                        <div class="fw-bold">MdToHTML</div>
+                        <div class="small text-muted">Small, lightweight website + app for converting markdown to formatted HTML.</div>
+                      </div>
+                      <div class="text-end">
+                        <span class="badge bg-dark text-warning">Web + Python</span>
+                      </div>
+                    </div>
+                    <div class="mt-2">
+                      <a href="https://github.com/GoobisMoobis/mdtohtml" class="stretched-link text-decoration-none small">View repo</a>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="col">
+                  <div class="proj-card">
+                    <div class="d-flex align-items-start justify-content-between">
+                      <div>
+                        <div class="fw-bold">ModeratedBot</div>
+                        <div class="small text-muted">A Discord bot with automod, slash commands, and interactive flows.</div>
+                      </div>
+                      <div class="text-end">
+                        <span class="badge bg-dark text-warning">Python</span>
+                      </div>
+                    </div>
+                    <div class="mt-2">
+                      <a href="#" class="stretched-link text-decoration-none small">Demo</a>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="col">
+                  <div class="proj-card">
+                    <div class="fw-bold">Tiny Experiments</div>
+                    <div class="small text-muted">Small scripts & demos — game logic experiments, math toy projects.</div>
+                  </div>
+                </div>
+                <div class="col">
+                  <div class="proj-card">
+                    <div class="fw-bold">Notes</div>
+                    <div class="small text-muted">Quick notes & guides.</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <footer class="mt-3">
+              <div id="contact" class="mb-1">Made by <strong>GoobisMoobis</strong> · <span class="text-muted">Simple hub — fast links</span></div>
+              <div class="small text-muted">Tip: edit this page to update links & projects.</div>
+            </footer>
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+
+  <script>
+    // ---------- small helpers ----------
+    const $typeTarget = $('#typeTarget');
+
+    // Typewriter effect
+    const phrases = ["a dumbass", "a developer", "a procrastinator", "GoobisMoobis"];
+    let pi = 0, ci = 0, forward = true;
+    function stepType(){
+      const txt = phrases[pi];
+      if(forward){
+        ci++;
+        $typeTarget.text(txt.substring(0,ci));
+        if(ci === txt.length){ forward=false; setTimeout(stepType,1000); return; }
+      } else {
+        ci--;
+        $typeTarget.text(txt.substring(0,ci));
+        if(ci === 0){ forward=true; pi=(pi+1)%phrases.length; setTimeout(stepType,300); return; }
+      }
+      setTimeout(stepType, 80);
+    }
+
+    $(function(){
+      stepType();
+
+      const tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'));
+      tooltipTriggerList.forEach(function(el){ new bootstrap.Tooltip(el) });
+
+      $('.link-card').each(function(i){
+        const el = $(this);
+        setTimeout(()=> el.addClass('show-in'), 140*i);
+      });
+
+      $('.proj-card').each(function(i){
+        const el = $(this);
+        setTimeout(()=> el.addClass('show-in'), 250 + 100*i);
+      });
+
+      $('#copyBtn').on('click', function(){
+        const email = $(this).data('clipboard') || 'contact@goobismoobis.com';
+        navigator.clipboard?.writeText(email).then(()=>{
+          $(this).text('Copied!');
+          setTimeout(()=> $(this).text('Copy Email'), 1400);
+        }).catch(()=>{
+          alert('Copy failed — select and copy manually: ' + email);
+        });
+      });
+
+      $('a[href^="#"]').on('click', function(e){
+        const target = $(this.getAttribute('href'));
+        if(target.length){
+          e.preventDefault();
+          $('html,body').animate({scrollTop: target.offset().top - 40}, 450);
+        }
+      });
+
+      $('.link-card').attr('tabindex', '0').on('keypress', function(e){
+        if(e.key === 'Enter'){ window.open($(this).attr('href'),'_blank'); }
+      });
+    });
+  </script>
+</body>
+</html>
