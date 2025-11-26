@@ -25,13 +25,25 @@
 
     <link
       rel="stylesheet"
+      href="/basestyles.css"
+    />
+    <link
+      rel="stylesheet"
       href="/mdtohtml/index.css"
     />
+    <style>
+      h1, h2, h3, h4, h5, h6, p, span, div {
+          color: black;
+      }
+      #title {
+        color: white;
+      }
+    </style>
   </head>
 
   <body>
     <div class="container">
-      <h1>Markdown to HTML Editor</h1>
+      <h1 id="title">Markdown to HTML Editor</h1>
 
       <div class="toolbar">
         <button id="toggleHtmlBtn">Toggle HTML View</button>
