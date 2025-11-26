@@ -1,0 +1,235 @@
+body {
+  font-family: Arial, sans-serif;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  min-height: 100vh;
+  margin: 0;
+  background-color: #f0f0f0;
+  padding: 1%;
+}
+
+.container {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  max-width: 98%;
+  height: 95vh;
+  gap: 1%;
+}
+
+.main-container {
+  display: flex;
+  height: 90%;
+  width: 100%;
+  overflow: hidden;
+  position: relative;
+}
+
+.mobile-toggle {
+  display: none;
+}
+
+.editor-preview-container {
+  width: 50%;
+  min-width: 200px;
+  max-width: calc(100% - 200px);
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+.editor-container {
+  border: 1px solid #ccc;
+  border-radius: 0.25em;
+  overflow: hidden;
+  background-color: #1e1e1e;
+  color: #d4d4d4;
+  height: 100%;
+  position: relative;
+}
+
+.CodeMirror {
+  height: 100%;
+  font-family: "Consolas", "Monaco", monospace;
+  font-size: 14px;
+  line-height: 1.5;
+}
+
+.editor-wrapper {
+  height: 100%;
+  display: none;
+}
+
+.editor-wrapper.active {
+  display: block;
+}
+
+.preview-container {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  min-width: 200px;
+}
+
+.preview {
+  border: 1px solid #ccc;
+  border-radius: 0.25em;
+  padding: 20px;
+  background-color: white;
+  overflow: auto;
+  height: 100%;
+  box-sizing: border-box;
+}
+
+.toolbar {
+  display: flex;
+  gap: 10px;
+  padding: 10px;
+  background-color: #f0f0f0;
+  border: 1px solid #ccc;
+  border-radius: 0.25em;
+  margin-bottom: 10px;
+}
+
+button {
+  padding: 8px 16px;
+  background-color: #4caf50;
+  color: white;
+  border: none;
+  border-radius: 0.25em;
+  cursor: pointer;
+  font-size: 14px;
+}
+
+button:hover {
+  background-color: #45a049;
+}
+
+.resizer {
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  background-color: #ccc;
+  width: 5px;
+  height: 100%;
+  cursor: col-resize;
+  z-index: 10;
+}
+
+h1 {
+  text-align: center;
+  color: #333;
+  margin-bottom: 10px;
+}
+
+.preview pre {
+  background-color: #f6f8fa;
+  border-radius: 0.25em;
+  padding: 16px;
+  overflow: auto;
+}
+
+.preview code {
+  font-family: "Consolas", "Monaco", monospace;
+  padding: 0.2em 0.4em;
+  border-radius: 0.25em;
+}
+
+.preview pre code {
+  padding: 0;
+}
+
+.preview blockquote {
+  border-left: 4px solid #ddd;
+  padding-left: 1em;
+  margin-left: 0;
+  color: #666;
+  background-color: #f9f9f9;
+  padding: 10px;
+  box-sizing: border-box;
+  overflow: hidden;
+}
+
+@media (max-width: 768px) {
+  body {
+    padding: 5px;
+  }
+
+  .container {
+    height: 100vh;
+    max-width: 100%;
+  }
+
+  .main-container {
+    flex-direction: column;
+    height: auto;
+    gap: 5px;
+  }
+
+  .editor-preview-container {
+    height: 50vh;
+    min-height: 300px;
+    width: 100% !important;
+    max-width: 100%;
+  }
+
+  .preview-container {
+    height: 40vh;
+    min-height: 250px;
+  }
+
+  .resizer {
+    display: none !important;
+  }
+
+  .mobile-toggle {
+    display: block;
+  }
+
+  .mobile-toggle button {
+    width: 100%;
+    margin-bottom: 5px;
+  }
+
+  .toolbar {
+    flex-wrap: wrap;
+    gap: 5px;
+  }
+
+  .toolbar button {
+    flex: 1;
+    min-width: 120px;
+  }
+
+  h1 {
+    font-size: 1.5em;
+    margin-bottom: 5px;
+  }
+
+  .preview {
+    font-size: 14px;
+    padding: 15px;
+  }
+}
+
+@media (max-height: 600px) {
+  .container {
+    height: auto;
+    min-height: 95vh;
+  }
+
+  .main-container {
+    height: auto;
+    min-height: 80vh;
+  }
+
+  .editor-preview-container {
+    min-height: 250px;
+  }
+
+  .preview-container {
+    min-height: 200px;
+  }
+}
