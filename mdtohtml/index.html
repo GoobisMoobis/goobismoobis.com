@@ -1,0 +1,388 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Markdown to HTML Editor</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/marked/4.3.0/marked.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/highlight.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/js-beautify/1.14.7/beautify-html.min.js"></script>
+    
+    <!-- CodeMirror CSS & JS -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.16/codemirror.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.16/theme/dracula.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.16/codemirror.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.16/mode/xml/xml.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.16/mode/markdown/markdown.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.16/mode/htmlmixed/htmlmixed.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.16/mode/css/css.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.16/mode/javascript/javascript.min.js"></script>
+    
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/styles/github.min.css"
+    />
+
+    <link
+      rel="stylesheet"
+      href="/mdtohtml/index.css"
+    />
+  </head>
+
+  <body>
+    <div class="container">
+      <h1>Markdown to HTML Editor</h1>
+
+      <div class="toolbar">
+        <button id="toggleHtmlBtn">Toggle HTML View</button>
+        <button id="openPreviewBtn">Open Preview in New Tab</button>
+        <button id="downloadBtn">Download MdToHtml app</button>
+        <div class="mobile-toggle">
+          <button id="mobileToggleBtn">Switch to Preview</button>
+        </div>
+      </div>
+
+      <div class="main-container">
+        <div class="editor-preview-container">
+          <div class="editor-container">
+            <div id="markdownEditorWrapper" class="editor-wrapper active"></div>
+            <div id="htmlEditorWrapper" class="editor-wrapper"></div>
+          </div>
+        </div>
+
+        <div class="resizer" id="resizer"></div>
+
+        <div class="preview-container">
+          <div class="preview" id="htmlPreview"></div>
+        </div>
+      </div>
+    </div>
+
+    <script>
+      let markdownEditor, htmlEditor;
+      let isHtmlView = false;
+      let isResizing = false;
+      let isMobilePreviewMode = false;
+
+      function initializeEditors() {
+        markdownEditor = CodeMirror(document.getElementById('markdownEditorWrapper'), {
+          mode: 'markdown',
+          theme: 'dracula',
+          lineNumbers: true,
+          lineWrapping: false,
+          indentUnit: 4,
+          tabSize: 4,
+          indentWithTabs: false,
+          value: `# Welcome to GoobisMoobis2's MD to HTML converter!
+
+[comment]: <> (write your markdown here!)
+
+MD is a popular markdown format. I personally have used it for GitHub Pages sites.
+
+This is mainly meant as a tool to make site pages faster than typing raw HTML and be able to see them change in real time
+
+## Thanks to:
+- [markedjs](https://github.com/markedjs/marked)
+- [highlightjs](https://github.com/highlightjs/highlight.js)
+- [js-beautify](https://github.com/beautifier/js-beautify)
+- [CodeMirror](https://codemirror.net/)
+
+## Want to learn Markdown?
+- [Cheat Sheet](https://www.markdownguide.org/cheat-sheet/)
+- [Basic Syntax](https://www.markdownguide.org/basic-syntax/)
+- [Extended Syntax](https://www.markdownguide.org/extended-syntax/)
+
+**Want to be able to open markdown files downloaded onto your device? Download my app, [mdtohtml](https://github.com/GoobisMoobis/mdtohtml/releases/tag/v1.0.4/)**`,
+          extraKeys: {
+            "Tab": function(cm) {
+              cm.replaceSelection("    ", "end");
+            }
+          }
+        });
+
+        htmlEditor = CodeMirror(document.getElementById('htmlEditorWrapper'), {
+          mode: 'htmlmixed',
+          theme: 'dracula',
+          lineNumbers: true,
+          lineWrapping: false,
+          readOnly: true,
+          indentUnit: 2,
+          tabSize: 2
+        });
+
+        markdownEditor.on('change', updatePreview);
+      }
+
+      const htmlPreview = document.getElementById("htmlPreview");
+      const toggleHtmlBtn = document.getElementById("toggleHtmlBtn");
+      const openPreviewBtn = document.getElementById("openPreviewBtn");
+      const mobileToggleBtn = document.getElementById("mobileToggleBtn");
+      const resizer = document.getElementById("resizer");
+      const editorPreviewContainer = document.querySelector(".editor-preview-container");
+      const previewContainer = document.querySelector(".preview-container");
+      const downloadBtn = document.getElementById("downloadBtn");
+      
+      marked.setOptions({
+        breaks: true,
+        gfm: true,
+        headerIds: false,
+        highlight: function (code, lang) {
+          if (lang && hljs.getLanguage(lang)) {
+            try {
+              return hljs.highlight(code, { language: lang }).value;
+            } catch (e) {
+              console.error(e);
+            }
+          }
+          return hljs.highlightAuto(code).value;
+        }
+      });
+      
+      function isMobile() {
+        return window.innerWidth <= 768;
+      }
+      
+      function updatePreview() {
+        const markdown = markdownEditor.getValue();
+        const html = marked.parse(markdown);
+        htmlPreview.innerHTML = html;
+        
+        const fullHtml = `
+          <!DOCTYPE html>
+          <html lang="en">
+          <head>
+            <meta charset="UTF-8">
+            <meta name="viewport" content="width=device-width, initial-scale=1.0">
+            <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/styles/github.min.css">
+            <!-- These are some basic HTML tags. -->
+            <!-- Meta tags aren't required but are standard across websites -->
+            <!-- If you are using codeblocks (\`\`\`) you NEED the <link rel="stylesheet"> element -->
+            <style>
+              body {
+                font-family: Arial, sans-serif;
+                line-height: 1.6;
+                max-width: 800px;
+                margin: 0 auto;
+                padding: 20px;
+              }
+              pre {
+                background-color: #f6f8fa;
+                border-radius: 3px;
+                padding: 16px;
+                overflow: auto;
+              }
+              code {
+                font-family: 'Consolas', 'Monaco', monospace;
+                padding: 0.2em 0.4em;
+                border-radius: 3px;
+                background-color: #f6f8fa;
+              }
+              pre code {
+                padding: 0;
+                background-color: transparent;
+              }
+              blockquote {
+                border-left: 4px solid #ddd;
+                padding-left: 1em;
+                margin-left: 0;
+                color: #666;
+                background-color: #f9f9f9;
+                padding: 10px;
+                overflow: hidden;
+              }
+            </style>
+          </head>
+          <body>
+            ${html}
+          </body>
+          </html>
+        `;
+        
+        const formattedHtml = html_beautify(fullHtml, {
+          indent_size: 2,
+          wrap_line_length: 80,
+          preserve_newlines: true,
+          max_preserve_newlines: 2
+        });
+        
+        htmlEditor.setValue(formattedHtml);
+      }
+      
+      function toggleHtmlView() {
+        isHtmlView = !isHtmlView;
+        
+        if (isHtmlView) {
+          document.getElementById('markdownEditorWrapper').classList.remove('active');
+          document.getElementById('htmlEditorWrapper').classList.add('active');
+          toggleHtmlBtn.textContent = "Show Markdown";
+          
+          setTimeout(() => {
+            htmlEditor.refresh();
+          }, 10);
+        } else {
+          document.getElementById('htmlEditorWrapper').classList.remove('active');
+          document.getElementById('markdownEditorWrapper').classList.add('active');
+          toggleHtmlBtn.textContent = "Show HTML";
+          
+          setTimeout(() => {
+            markdownEditor.refresh();
+          }, 10);
+        }
+      }
+      
+      function updateMobileLayout() {
+        if (isMobile()) {
+          if (isMobilePreviewMode) {
+            editorPreviewContainer.style.display = "none";
+            previewContainer.style.display = "flex";
+            mobileToggleBtn.textContent = "Switch to Editor";
+          } else {
+            editorPreviewContainer.style.display = "flex";
+            previewContainer.style.display = "none";
+            mobileToggleBtn.textContent = "Switch to Preview";
+          }
+        } else {
+          editorPreviewContainer.style.display = "flex";
+          previewContainer.style.display = "flex";
+          isMobilePreviewMode = false;
+        }
+        
+        setTimeout(() => {
+          if (isHtmlView) {
+            htmlEditor.refresh();
+          } else {
+            markdownEditor.refresh();
+          }
+        }, 100);
+      }
+      
+      function handleResize(e) {
+        if (!isResizing || isMobile()) return;
+        
+        const container = document.querySelector(".main-container");
+        const containerRect = container.getBoundingClientRect();
+        const containerWidth = containerRect.width;
+        
+        const newLeftWidth = ((e.clientX - containerRect.left) / containerWidth) * 100;
+        
+        const minWidth = 20; 
+        const maxWidth = 80;
+        
+        const constrainedWidth = Math.max(minWidth, Math.min(maxWidth, newLeftWidth));
+        
+        editorPreviewContainer.style.width = `${constrainedWidth}%`;
+        resizer.style.left = `${constrainedWidth}%`;
+        
+        setTimeout(() => {
+          if (isHtmlView) {
+            htmlEditor.refresh();
+          } else {
+            markdownEditor.refresh();
+          }
+        }, 10);
+      }
+      
+      function stopResize() {
+        isResizing = false;
+        document.body.style.cursor = "";
+        document.removeEventListener("mousemove", handleResize);
+        document.removeEventListener("mouseup", stopResize);
+      }
+      
+      function startResize(e) {
+        isResizing = true;
+        document.body.style.cursor = "col-resize";
+        document.addEventListener("mousemove", handleResize);
+        document.addEventListener("mouseup", stopResize);
+        e.preventDefault();
+      }
+      
+      toggleHtmlBtn.addEventListener("click", toggleHtmlView);
+      
+      openPreviewBtn.addEventListener("click", function () {
+        const markdown = markdownEditor.getValue();
+        const html = marked.parse(markdown);
+        const newTab = window.open("about:blank", "_blank");
+        if (newTab) {
+          newTab.document.write(`
+            <!DOCTYPE html>
+            <html lang="en">
+            <head>
+              <meta charset="UTF-8">
+              <meta name="viewport" content="width=device-width, initial-scale=1.0">
+              <title>Markdown Preview</title>
+              <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/styles/github.min.css">
+              <style>
+                body {
+                  font-family: Arial, sans-serif;
+                  line-height: 1.6;
+                  max-width: 800px;
+                  margin: 0 auto;
+                  padding: 20px;
+                }
+                pre {
+                  background-color: #f6f8fa;
+                  border-radius: 3px;
+                  padding: 16px;
+                  overflow: auto;
+                }
+                code {
+                  font-family: 'Consolas', 'Monaco', monospace;
+                  padding: 0.2em 0.4em;
+                  border-radius: 3px;
+                  background-color: #f6f8fa;
+                }
+                pre code {
+                  padding: 0;
+                  background-color: transparent;
+                }
+                blockquote {
+                  border-left: 4px solid #ddd;
+                  padding-left: 1em;
+                  margin-left: 0;
+                  color: #666;
+                  background-color: #f9f9f9;
+                  padding: 10px;
+                  overflow: hidden;
+                }
+              </style>
+            </head>
+            <body>
+              ${html}
+            </body>
+            </html>
+          `);
+          newTab.document.close();
+        }
+      });
+      
+      mobileToggleBtn.addEventListener("click", function () {
+        isMobilePreviewMode = !isMobilePreviewMode;
+        updateMobileLayout();
+      });
+      
+      resizer.addEventListener("mousedown", startResize);
+      
+      downloadBtn.addEventListener("click", function () {
+        window.open("https://github.com/GoobisMoobis/mdtohtml/releases/tag/v1.0.4", "_blank");
+      });
+      
+      window.addEventListener("resize", function () {
+        updateMobileLayout();
+      });
+      
+      window.addEventListener("load", function () {
+        initializeEditors();
+        updatePreview();
+        isMobilePreviewMode = false;
+        updateMobileLayout();
+        
+        const container = document.querySelector(".main-container");
+        const containerRect = container.getBoundingClientRect();
+        const initialWidth = editorPreviewContainer.getBoundingClientRect().width;
+        const percentage = (initialWidth / containerRect.width) * 100;
+        resizer.style.left = `${percentage}%`;
+      });
+    </script>
+  </body>
+</html>
