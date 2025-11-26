@@ -3,7 +3,9 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>GoobisMoobis — Links & Projects</title>
+  <title>GoobisMoobis.com</title>
+
+  <link rel="icon" type="image/x-icon" href="/assets/goobismoobis2logo.png">
 
   <!-- Google Font -->
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
@@ -18,7 +20,7 @@
     :root{
       --bg:#070707;
       --card:#0f0f0f;
-      --accent:#ffb84d; /* orange-ish yellow */
+      --accent:#ffb84d;
       --accent-2:#ff9f1c;
       --muted:#cfcfcf;
     }
@@ -193,39 +195,29 @@
                 </div>
               </div>
               <div class="text-end d-none d-lg-block">
-                <span class="accent-pill">Open to collab</span>
+                <span class="accent-pill" style="color: purple; text-align: center;">Open to collab</span>
               </div>
             </div>
 
             <!-- Quick links collapse -->
             <div class="collapse mt-3" id="topLinks">
               <div class="links-grid" id="links">
-                <a class="link-card text-decoration-none text-reset" href="https://github.com/" target="_blank" rel="noopener" data-bs-toggle="tooltip" title="My GitHub">
+                <a class="link-card text-decoration-none text-reset" href="https://github.com/GoobisMoobis/" target="_blank" rel="noopener" data-bs-toggle="tooltip" title="My GitHub">
                   <div class="d-flex align-items-start gap-3">
                     <i class="bi bi-github"></i>
                     <div>
                       <div class="fw-bold">GitHub</div>
-                      <div class="small text-muted">Code, repos, and experiments</div>
+                      <div class="small text-muted">Code, repos, etc</div>
                     </div>
                   </div>
                 </a>
 
-                <a class="link-card text-decoration-none text-reset" href="https://twitter.com/" target="_blank" rel="noopener" data-bs-toggle="tooltip" title="My Twitter/X">
-                  <div class="d-flex align-items-start gap-3">
-                    <i class="bi bi-twitter"></i>
-                    <div>
-                      <div class="fw-bold">Twitter</div>
-                      <div class="small text-muted">Short updates & demos</div>
-                    </div>
-                  </div>
-                </a>
-
-                <a class="link-card text-decoration-none text-reset" href="mailto:put-your-email@here.com" target="_blank" rel="noopener" data-bs-toggle="tooltip" title="Email me">
+                <a class="link-card text-decoration-none text-reset" href="mailto:contact@goobismoobis.com" target="_blank" rel="noopener" data-bs-toggle="tooltip" title="Email me">
                   <div class="d-flex align-items-start gap-3">
                     <i class="bi bi-envelope"></i>
                     <div>
                       <div class="fw-bold">Email</div>
-                      <div class="small text-muted">Contact & collabs</div>
+                      <div class="small text-muted">Main method to contact me</div>
                     </div>
                   </div>
                 </a>
@@ -259,7 +251,6 @@
             </div>
 
             <div class="mt-3 d-flex gap-2">
-              <a class="btn btn-outline-light btn-sm" href="#projects">See projects</a>
               <button class="btn btn-warning btn-sm text-dark" id="copyBtn" data-clipboard="contact@goobismoobis.com">Copy Email</button>
             </div>
           </div>
@@ -287,7 +278,7 @@
                       </div>
                     </div>
                     <div class="mt-2">
-                      <a href="https://github.com/GoobisMoobis/mdtohtml" class="stretched-link text-decoration-none small">View repo</a>
+                      <a href="https://github.com/GoobisMoobis/mdtohtml" class="text-decoration-none small">View repo</a>
                     </div>
                   </div>
                 </div>
@@ -296,37 +287,33 @@
                   <div class="proj-card">
                     <div class="d-flex align-items-start justify-content-between">
                       <div>
-                        <div class="fw-bold">ModeratedBot</div>
-                        <div class="small text-muted">A Discord bot with automod, slash commands, and interactive flows.</div>
+                        <div class="fw-bold">Pytools</div>
+                        <div class="small text-muted">Various QOL tools I've made in python</div>
                       </div>
                       <div class="text-end">
                         <span class="badge bg-dark text-warning">Python</span>
                       </div>
                     </div>
                     <div class="mt-2">
-                      <a href="#" class="stretched-link text-decoration-none small">Demo</a>
+                      <a href="#" class="text-decoration-none small">Link coming soon!</a>
                     </div>
                   </div>
                 </div>
 
                 <div class="col">
                   <div class="proj-card">
-                    <div class="fw-bold">Tiny Experiments</div>
-                    <div class="small text-muted">Small scripts & demos — game logic experiments, math toy projects.</div>
-                  </div>
-                </div>
-                <div class="col">
-                  <div class="proj-card">
-                    <div class="fw-bold">Notes</div>
-                    <div class="small text-muted">Quick notes & guides.</div>
+                    <div class="fw-bold">Blog</div>
+                    <div class="small text-muted">Dev projects, my opinions, etc</div>
+                    <div class="mt-2">
+                      <a href="#" class="text-decoration-none small">Link coming soon!</a>
+                    </div>
                   </div>
                 </div>
               </div>
             </div>
 
             <footer class="mt-3">
-              <div id="contact" class="mb-1">Made by <strong>GoobisMoobis</strong> · <span class="text-muted">Simple hub — fast links</span></div>
-              <div class="small text-muted">Tip: edit this page to update links & projects.</div>
+              <div id="contact" class="mb-1">Made by <strong>GoobisMoobis</strong></div>
             </footer>
           </div>
         </div>
@@ -342,7 +329,7 @@
     const $typeTarget = $('#typeTarget');
 
     // Typewriter effect
-    const phrases = ["a dumbass", "a developer", "a procrastinator", "GoobisMoobis"];
+    const phrases = ["a dumbass", "a developer", "a procrastinator", "GoobisMoobis", "also known as GoobisMoobis2"];
     let pi = 0, ci = 0, forward = true;
     function stepType(){
       const txt = phrases[pi];
@@ -380,7 +367,7 @@
           $(this).text('Copied!');
           setTimeout(()=> $(this).text('Copy Email'), 1400);
         }).catch(()=>{
-          alert('Copy failed — select and copy manually: ' + email);
+          alert('Copy failed: select and copy manually: ' + email);
         });
       });
 
